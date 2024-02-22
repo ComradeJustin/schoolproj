@@ -6,6 +6,7 @@ use crossterm::{
     },
     ExecutableCommand,
 };
+use std::io::Write;
 use mainloop::gamelogic;
 use ratatui::{
     layout::{self, Constraint, Direction, Layout, Rect}, prelude::{CrosstermBackend, Stylize, Terminal}, style::{palette::material::RED, Color, Style}, widgets::{Block, BorderType, Borders, Paragraph, Widget}
@@ -30,7 +31,9 @@ fn main() -> Result<()> {
 
 
     Ok(())
+
 }
+
 
 
 
@@ -38,10 +41,8 @@ fn main() -> Result<()> {
 
 fn mainloop()-> Result<()> {
     let mut inputval = "".to_string();
-
-    let mut printtermval:String = "".to_string();
     let mut termcol:ratatui::style::Color = ratatui::style::Color::Blue;
-    
+    let mut outval:String = "".to_string();
 
 
     let mut terminal = Terminal::new(CrosstermBackend::new(stdout()))?;
@@ -84,8 +85,7 @@ fn mainloop()-> Result<()> {
 
 
        f.render_widget(Paragraph::new(format!(
-        "{printtermval}
-        "
+        "{outval}"
         )).style(
             Style::default()
             .fg(termcol))
@@ -140,9 +140,11 @@ fn mainloop()-> Result<()> {
 
     if crossterm::event::poll(Duration::from_millis(250))?{ //determines input
         if let Event::Key(key) = crossterm::event::read()?{
+
             if key.code == KeyCode::Esc{
                 break;
             }
+            
             
             if key.kind == KeyEventKind::Release{
                 match key.code{
@@ -152,17 +154,14 @@ fn mainloop()-> Result<()> {
                     
                     _ => {}
                 }
-                if key.code == KeyCode::Enter{
+                if key.code == KeyCode::Enter {
 
                     if gamelogic(inputval.clone()) == 1{
                         termcol = ratatui::style::Color::LightBlue;
-                        printtermval = inputval.clone();
+                        outval= outval + &format!("\n {inputval}").to_string();
 
                     }
-                    else{
-                        termcol = ratatui::style::Color::Red;
-                        printtermval = "Not a command!".to_string();
-                    }
+
                     inputval = "".to_string();
                 }
 
