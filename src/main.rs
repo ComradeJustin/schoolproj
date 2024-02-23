@@ -6,6 +6,7 @@ use crossterm::{
     },
     ExecutableCommand,
 };
+use ratatui_image::Image;
 use std::io::Write;
 use mainloop::gamelogic;
 use ratatui::{
@@ -90,7 +91,7 @@ fn mainloop()-> Result<()> {
             Style::default()
             .fg(termcol))
             .block(Block::default()
-            .title("Todo game")
+            .title("Terminal Output")
             .borders(Borders::ALL)
             .border_type(BorderType::Thick)
             .style(Style::default()
@@ -106,7 +107,7 @@ fn mainloop()-> Result<()> {
                     Style::default()
                     .fg(Color::Blue))
                     .block(Block::default()
-                    .title("input")
+                    .title("Input")
                     .borders(Borders::ALL)
                     .border_type(BorderType::Thick)
                     .style(Style::default()
@@ -133,6 +134,7 @@ fn mainloop()-> Result<()> {
                             .style(Style::default()
                             .fg(Color::Green))),
                              rside[0]);
+                             
     });
     
   
@@ -146,7 +148,7 @@ fn mainloop()-> Result<()> {
             }
             
             
-            if key.kind == KeyEventKind::Release{
+            if key.kind == KeyEventKind::Press{
                 match key.code{
                     KeyCode::Char(value) => {
                         inputval.push(value)
@@ -158,7 +160,12 @@ fn mainloop()-> Result<()> {
 
                     if gamelogic(inputval.clone()) == 1{
                         termcol = ratatui::style::Color::LightBlue;
+                        match inputval.as_str() {
+                            "/clear" => outval = "".to_string(),
+                            _ => ()
+                        }
                         outval= outval + &format!("\n {inputval}").to_string();
+                        
 
                     }
 
@@ -186,6 +193,7 @@ fn mainloop()-> Result<()> {
 
 
     })
+    
 
 
     
