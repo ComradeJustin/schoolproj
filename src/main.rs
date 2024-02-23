@@ -6,8 +6,13 @@ use crossterm::{
     },
     ExecutableCommand,
 };
-use ratatui_image::Image;
-use std::io::Write;
+
+use rascii_art::{
+    render_to,
+    RenderOptions,
+};
+
+
 use mainloop::gamelogic;
 use ratatui::{
     layout::{self, Constraint, Direction, Layout, Rect}, prelude::{CrosstermBackend, Stylize, Terminal}, style::{palette::material::RED, Color, Style}, widgets::{Block, BorderType, Borders, Paragraph, Widget}
@@ -21,8 +26,8 @@ fn main() -> Result<()> {
     stdout().execute(EnterAlternateScreen)?;
     enable_raw_mode()?; // disables all input
     terminal.clear()?; //clears everything
-
-
+    //Start the intro sequence
+    //let _ = introstart();
 
 
     let _ = mainloop(); // Runs main loop of rendering and processing
@@ -36,15 +41,46 @@ fn main() -> Result<()> {
 }
 
 
+/*fn introstart() -> Result<()>{
+
+    let mut title = String::new();
+    let _  = render_to(
+        r".\assets\sigma.jpg", &mut title,
+        &RenderOptions::new()
+        .width(100)
+        .colored(true)
+        .charset(&[".", ",", "-", "*", "£", "$", "#"]),);
+
+
+    let mut terminal = Terminal::new(CrosstermBackend::new(stdout()))?;
+    Ok(loop {
+        let _ = terminal.draw(|f|{
+            let lay = Rect::new(0,0, f.size().width,f.size().height);
+            f.render_widget(Paragraph::new(title.clone()), lay)
+        });
+    })
+}*/
+//todo
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 fn mainloop()-> Result<()> {
-    let mut inputval = "".to_string();
+    let mut inputval = String::new();
     let mut termcol:ratatui::style::Color = ratatui::style::Color::Blue;
-    let mut outval:String = "".to_string();
-
+    let mut outval = String::new();
+    
 
     let mut terminal = Terminal::new(CrosstermBackend::new(stdout()))?;
     Ok(loop {
@@ -161,13 +197,14 @@ fn mainloop()-> Result<()> {
                     if gamelogic(inputval.clone()) == 1{
                         termcol = ratatui::style::Color::LightBlue;
                         match inputval.as_str() {
-                            "/clear" => outval = "".to_string(),
+                            "/clear" => outval = String::new(),
                             _ => ()
                         }
                         outval= outval + &format!("\n {inputval}").to_string();
                         
 
                     }
+
 
                     inputval = "".to_string();
                 }
@@ -196,6 +233,10 @@ fn mainloop()-> Result<()> {
     
 
 
+    
+}
+
+fn inputchecker(){
     
 }
 

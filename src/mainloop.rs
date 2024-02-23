@@ -15,3 +15,12 @@ pub fn gamelogic(input:String) -> i32{
         return -1;
     }
 }
+
+pub fn gameinit(Username:String) -> String{
+    loop {
+        if Username.contains(""){}
+        else {
+            return Username;
+        }
+    }
+}
