@@ -16,11 +16,16 @@ pub fn gamelogic(input:String) -> i32{
     }
 }
 
-pub fn gameinit(Username:String) -> String{
+pub fn gameinit(Username:String) -> (String,bool){
+    let mut namestate:bool = true;
     loop {
-        if Username.contains(""){}
+        if Username.contains(""){
+            namestate = true;
+            return (Username, namestate);
+        }
         else {
-            return Username;
+            namestate = false;
+            return (Username,namestate);
         }
     }
 }

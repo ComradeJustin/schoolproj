@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 crossterm = "0.27.0"
+image = "0.24.9"
 rascii_art = "0.4.5"
 ratatui = "0.26.1"
 ratatui-image = "0.8.1"

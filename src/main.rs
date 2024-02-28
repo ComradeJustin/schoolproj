@@ -11,13 +11,13 @@ use rascii_art::{
     render_to,
     RenderOptions,
 };
-
+use image::io::Reader;
 
 use mainloop::gamelogic;
 use ratatui::{
-    layout::{self, Constraint, Direction, Layout, Rect}, prelude::{CrosstermBackend, Stylize, Terminal}, style::{palette::material::RED, Color, Style}, widgets::{Block, BorderType, Borders, Paragraph, Widget}
+    backend::{Backend, TestBackend}, layout::{self, Constraint, Direction, Layout, Rect}, prelude::{CrosstermBackend, Stylize, Terminal}, style::{palette::material::RED, Color, Style}, widgets::{Block, BorderType, Borders, Paragraph, Widget}, Frame
 };
-use std::{default, io::{stdout, Result}, time::Duration};
+use std::{default, error::Error, io::{stdout, Result}, result, time::Duration};
 
 mod mainloop;
 
@@ -61,9 +61,6 @@ fn main() -> Result<()> {
     })
 }*/
 //todo
-
-
-
 
 
 
@@ -236,9 +233,7 @@ fn mainloop()-> Result<()> {
     
 }
 
-fn inputchecker(){
-    
-}
+
 
 
 
